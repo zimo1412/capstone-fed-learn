@@ -30,6 +30,7 @@ client_results_root = "/tmp/nvflare/sim_covid"
 
 # 4.1 Central vs. FedAvg
 experiments = {"central": {"tag": "val_acc_local_model"}, "fedavg": {"tag": "val_acc_global_model", "alpha": 1.0}}
+fig_name = "central_vs_fedavg.png"
 
 # # 4.2 Impact of client data heterogeneity
 # experiments = {"fedavg (alpha=1.0)": {"tag": "val_acc_global_model", "alpha": 1.0},
@@ -37,13 +38,7 @@ experiments = {"central": {"tag": "val_acc_local_model"}, "fedavg": {"tag": "val
 #               "fedavg (alpha=0.3)": {"tag": "val_acc_global_model", "alpha": 0.3},
 #               "fedavg (alpha=0.1)": {"tag": "val_acc_global_model", "alpha": 0.1}
 # }
-
-# # 4.3 FedProx vs. FedOpt vs. SCAFFOLD
-# experiments = {"fedavg": {"tag": "val_acc_global_model", "alpha": 0.1},
-#               "fedprox": {"tag": "val_acc_global_model", "alpha": 0.1},
-#               "fedopt": {"tag": "val_acc_global_model", "alpha": 0.1},
-#               "scaffold": {"tag": "val_acc_global_model", "alpha": 0.1}
-# }
+# fig_name = "fedavg_alpha.png"
 
 add_cross_site_val = True
 
@@ -95,10 +90,10 @@ def main():
         eventfile = glob.glob(
             os.path.join(client_results_root, config_name, "**", "app_site-1", "events.*"), recursive=True
         )
-        # assert len(eventfile) == 1, f"No unique event file found in {os.path.join(client_results_root, config_name)}!"
-        for ef in eventfile:
-            print("adding", ef)
-            add_eventdata(data, config, ef, tag=exp["tag"])
+        assert len(eventfile) == 1, f"No unique event file found in {os.path.join(client_results_root, config_name)}!"
+        eventfile = eventfile[0]
+        print("adding", eventfile)
+        add_eventdata(data, config, eventfile, tag=exp["tag"])
 
         if add_cross_site_val:
             xsite_file = glob.glob(
@@ -124,6 +119,7 @@ def main():
 
     sns.lineplot(x="Step", y="Accuracy", hue="Config", data=data)
     plt.show()
+    plt.savefig(f"figs/{fig_name}")
 
 
 if __name__ == "__main__":

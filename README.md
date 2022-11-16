@@ -103,12 +103,12 @@ One can see that FedAvg can achieve similar performance to central training.
 
 | Config	| Alpha	| 	Val score	| 
 | ----------- | ----------- |  ----------- |
-| covid_central | 1.0	| 	0.894	| 
-| covid_fedavg  | 1.0	| 	0.883	| 
+| covid_central | 1.0	| 	0.83700	| 
+| covid_fedavg  | 1.0	| 	0.82425	| 
 
 ![Central vs. FedAvg](./covid-sim/figs/central_vs_fedavg.png)
 
-### 4.2 Impact of client data heterogeneity
+### 4.2 Impact of client data heterogeneity (Not updated yet)
 
 We also tried different `alpha` values, where lower values cause higher heterogeneity. 
 This can be observed in the resulting performance of the FedAvg algorithms.  
