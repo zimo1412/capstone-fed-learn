@@ -1,0 +1,12 @@
+{
+    "name": "covid_central_alpha1.0",
+    "deploy_map": {
+        "covid_central": [
+            "@ALL"
+        ]
+    },
+    "min_clients": 1,
+    "mandatory_clients": [
+        "site-1"
+    ]
+}

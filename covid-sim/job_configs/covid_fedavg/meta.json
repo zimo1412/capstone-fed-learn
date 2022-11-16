@@ -1,0 +1,9 @@
+{
+    "name": "covid_fedavg_alpha1.0",
+    "deploy_map": {
+        "covid_fedavg": [
+            "@ALL"
+        ]
+    },
+    "min_clients": 8
+}

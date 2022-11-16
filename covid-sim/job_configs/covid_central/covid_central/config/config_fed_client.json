@@ -1,0 +1,33 @@
+{
+    "format_version": 2,
+    "executors": [
+        {
+            "tasks": [
+                "train",
+                "submit_model",
+                "validate"
+            ],
+            "executor": {
+                "id": "Executor",
+                "path": "nvflare.app_common.executors.learner_executor.LearnerExecutor",
+                "args": {
+                    "learner_id": "covid-learner"
+                }
+            }
+        }
+    ],
+    "task_result_filters": [],
+    "task_data_filters": [],
+    "components": [
+        {
+            "id": "covid-learner",
+            "path": "pt.learners.covid_learner.COVIDLearner",
+            "args": {
+                "aggregation_epochs": 10,
+                "lr": 0.005,
+                "central": true
+            }
+        }
+    ],
+    "TRAIN_SPLIT_ROOT": "/tmp/covid_splits/covid_central_alpha1.0_5502e145-4c36-448e-8e05-22c9be39b914"
+}
