@@ -1,5 +1,5 @@
 {
-    "name": "covid_fedavg_alpha1.0",
+    "name": "covid_fedavg_alpha0.1",
     "deploy_map": {
         "covid_fedavg": [
             "@ALL"

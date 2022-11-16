@@ -29,16 +29,16 @@ client_results_root = "/tmp/nvflare/sim_covid"
 # download_dir = "./workspaces/poc_workspace/admin/transfer"
 
 # 4.1 Central vs. FedAvg
-experiments = {"central": {"tag": "val_acc_local_model"}, "fedavg": {"tag": "val_acc_global_model", "alpha": 1.0}}
-fig_name = "central_vs_fedavg.png"
+# experiments = {"central": {"tag": "val_acc_local_model"}, "fedavg": {"tag": "val_acc_global_model", "alpha": 1.0}}
+# fig_name = "central_vs_fedavg.png"
 
 # # 4.2 Impact of client data heterogeneity
-# experiments = {"fedavg (alpha=1.0)": {"tag": "val_acc_global_model", "alpha": 1.0},
-#               "fedavg (alpha=0.5)": {"tag": "val_acc_global_model", "alpha": 0.5},
-#               "fedavg (alpha=0.3)": {"tag": "val_acc_global_model", "alpha": 0.3},
-#               "fedavg (alpha=0.1)": {"tag": "val_acc_global_model", "alpha": 0.1}
-# }
-# fig_name = "fedavg_alpha.png"
+experiments = {"fedavg (alpha=1.0)": {"tag": "val_acc_global_model", "alpha": 1.0},
+              "fedavg (alpha=0.5)": {"tag": "val_acc_global_model", "alpha": 0.5},
+              "fedavg (alpha=0.3)": {"tag": "val_acc_global_model", "alpha": 0.3},
+              "fedavg (alpha=0.1)": {"tag": "val_acc_global_model", "alpha": 0.1}
+}
+fig_name = "fedavg_alpha.png"
 
 add_cross_site_val = True
 
