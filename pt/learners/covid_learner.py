@@ -136,21 +136,23 @@ class COVIDLearner(Learner):
             self.criterion_prox = PTFedProxLoss(mu=self.fedproxloss_mu)
         self.transform_train = transforms.Compose(
             [
+                transforms.Resize(50),
                 transforms.RandomHorizontalFlip(),
                 transforms.ToTensor(),
                 transforms.Normalize(
                     mean=[x / 255.0 for x in [125.3, 123.0, 113.9]],
                     std=[x / 255.0 for x in [63.0, 62.1, 66.7]],
-                ),
+                )
             ]
         )
         self.transform_valid = transforms.Compose(
             [
+                transforms.Resize(50),
                 transforms.ToTensor(),
                 transforms.Normalize(
                     mean=[x / 255.0 for x in [125.3, 123.0, 113.9]],
                     std=[x / 255.0 for x in [63.0, 62.1, 66.7]],
-                ),
+                )
             ]
         )
 
