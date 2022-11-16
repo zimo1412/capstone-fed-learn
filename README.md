@@ -1,13 +1,10 @@
-# Simulated Federated Learning with CIFAR-10
+# Simulated Federated Learning with COVID
 
-This example includes instructions on running [FedAvg](https://arxiv.org/abs/1602.05629), 
-[FedProx](https://arxiv.org/abs/1812.06127), [FedOpt](https://arxiv.org/abs/2003.00295), 
-and [SCAFFOLD](https://arxiv.org/abs/1910.06378) algorithms using NVFlare's FL simulator.
+This example includes instructions on running [FedAvg](https://arxiv.org/abs/1602.05629) algorithms using NVFlare's FL simulator.
 
-For instructions of how to run CIFAR-10 in real-world deployment settings, 
-see the example on ["Real-world Federated Learning with CIFAR-10"](../cifar10-real-world/README.md).
+All the following command should be executed under `covid-sim` subfolder.
 
-## (Optional) 1. Set up a virtual environment
+## 1. Set up a virtual environment
 ```
 python3 -m pip install --user --upgrade pip
 python3 -m pip install --user virtualenv
@@ -36,7 +33,13 @@ export COVID_ROOT=${PWD}/../data
 ```
 
 ### 2. Download the COVID dataset 
-Skip
+
+If you are using EC2, download the dataset from S3:
+
+```
+# Run command under the root directory of this repo.
+aws s3 sync s3://capstone-fed-learn/data/lung_classification/ data/
+```
 
 ## 3. Run simulated FL experiments
 
@@ -66,7 +69,7 @@ nvflare simulator job_configs/covid_central --workspace ${RESULT_ROOT}/central -
 Note, here `alpha=0.0` means that no heterogeneous data splits are being generated.
 
 You can visualize the training progress by running `tensorboard --logdir=${RESULT_ROOT}`
-![Central training curve](./figs/central_training.png)
+![Central training curve](./covid-sim/figs/central_training.png)
 
 ### 3.3 FedAvg on different data splits
 
@@ -77,13 +80,13 @@ Each job will take about 35 minutes, depending on your system.
 You can copy the whole block into the terminal, and it will execute each experiment one after the other.
 ```
 ./set_alpha.sh covid_fedavg 1.0
-nvflare simulator job_configs/covid_fedavg --workspace ${RESULT_ROOT}/fedavg_alpha1.0 --threads 1 --n_clients 8
+nvflare simulator job_configs/covid_fedavg --workspace ${RESULT_ROOT}/fedavg_alpha1.0 --threads 8 --n_clients 8
 ./set_alpha.sh covid_fedavg 0.5
-nvflare simulator job_configs/covid_fedavg --workspace ${RESULT_ROOT}/fedavg_alpha0.5 --threads 1 --n_clients 8
+nvflare simulator job_configs/covid_fedavg --workspace ${RESULT_ROOT}/fedavg_alpha0.5 --threads 8 --n_clients 8
 ./set_alpha.sh covid_fedavg 0.3
-nvflare simulator job_configs/covid_fedavg --workspace ${RESULT_ROOT}/fedavg_alpha0.3 --threads 1 --n_clients 8
+nvflare simulator job_configs/covid_fedavg --workspace ${RESULT_ROOT}/fedavg_alpha0.3 --threads 8 --n_clients 8
 ./set_alpha.sh covid_fedavg 0.1
-nvflare simulator job_configs/covid_fedavg --workspace ${RESULT_ROOT}/fedavg_alpha0.1 --threads 1 --n_clients 8
+nvflare simulator job_configs/covid_fedavg --workspace ${RESULT_ROOT}/fedavg_alpha0.1 --threads 8 --n_clients 8
 ```
 
 ## 4. Results
@@ -91,8 +94,8 @@ nvflare simulator job_configs/covid_fedavg --workspace ${RESULT_ROOT}/fedavg_alp
 Let's summarize the result of the experiments run above. First, we will compare the final validation scores of 
 the global models for different settings. In this example, all clients compute their validation scores using the
 same CIFAR-10 test set. The plotting script used for the below graphs is in 
-[./figs/plot_tensorboard_events.py](./figs/plot_tensorboard_events.py) 
-(please install [./virtualenv/plot-requirements.txt](./virtualenv/plot-requirements.txt)).
+[./figs/plot_tensorboard_events.py](./covid-sim/figs/plot_tensorboard_events.py) 
+(please install [./virtualenv/plot-requirements.txt](./covid-sim/virtualenv/plot-requirements.txt)).
 
 ### 4.1 Central vs. FedAvg
 With a data split using `alpha=1.0`, i.e. a non-heterogeneous split, we achieve the following final validation scores.
@@ -103,7 +106,7 @@ One can see that FedAvg can achieve similar performance to central training.
 | covid_central | 1.0	| 	0.894	| 
 | covid_fedavg  | 1.0	| 	0.883	| 
 
-![Central vs. FedAvg](./figs/central_vs_fedavg.png)
+![Central vs. FedAvg](./covid-sim/figs/central_vs_fedavg.png)
 
 ### 4.2 Impact of client data heterogeneity
 
@@ -117,23 +120,4 @@ This can be observed in the resulting performance of the FedAvg algorithms.
 | covid_fedavg |	0.3 |	0.8350 |
 | covid_fedavg |	0.1 |	0.7733 |
 
-![Impact of client data heterogeneity](./figs/fedavg_alpha.png)
-
-### 4.3 FedAvg vs. FedProx vs. FedOpt vs. SCAFFOLD
-
-Finally, we compare an `alpha` setting of 0.1, causing a high client data heterogeneity and its 
-impact on more advanced FL algorithms, namely FedProx, FedOpt, and SCAFFOLD. 
-FedProx and SCAFFOLD achieve better performance compared to FedAvg and FedProx with the same `alpha` setting. 
-However, FedOpt and SCAFFOLD show markedly better convergence rates. 
-SCAFFOLD achieves that by adding a correction term when updating the client models, while FedOpt utilizes SGD with momentum 
-to update the global model on the server. 
-Both achieve better performance with the same number of training steps as FedAvg/FedProx.
-
-| Config           |	Alpha |	Val score |
-|------------------| ----------- |  ---------- |
-| covid_fedavg   |	0.1 |	0.7733 |
-| cifar10_fedprox  |	0.1 |	0.7615 |
-| cifar10_fedopt   |	0.1 |	0.8013 |
-| cifar10_scaffold |	0.1 |	0.8222 |
-
-![FedProx vs. FedOpt](./figs/fedopt_fedprox_scaffold.png)
+![Impact of client data heterogeneity](./covid-sim/figs/fedavg_alpha.png)
