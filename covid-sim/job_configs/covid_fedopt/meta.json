@@ -1,0 +1,9 @@
+{
+    "name": "covid_fedopt",
+    "deploy_map": {
+        "covid_fedopt": [
+            "@ALL"
+        ]
+    },
+    "min_clients": 8
+}
