@@ -2,8 +2,8 @@
     "format_version": 2,
     "min_clients": 8,
     "num_rounds": 20,
-    "TRAIN_SPLIT_ROOT": "/tmp/covid_splits/covid_fedavg_alpha0.1_2c57d1c8-811d-4760-b903-29a08d6451f9",
-    "alpha": 0.1,
+    "TRAIN_SPLIT_ROOT": "/tmp/covid_splits/covid_fedavg_alpha1.0_ba4822a8-82b3-4da5-98e2-0e20059868a3",
+    "alpha": 1.0,
     "server": {
         "heart_beat_timeout": 600
     },

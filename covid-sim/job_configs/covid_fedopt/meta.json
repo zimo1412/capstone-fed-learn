@@ -1,5 +1,5 @@
 {
-    "name": "covid_fedopt",
+    "name": "covid_fedopt_alpha0.1",
     "deploy_map": {
         "covid_fedopt": [
             "@ALL"

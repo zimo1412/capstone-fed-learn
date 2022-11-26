@@ -2,7 +2,7 @@
     "format_version": 2,
     "min_clients": 8,
     "num_rounds": 20,
-    "TRAIN_SPLIT_ROOT": "/tmp/covid_splits/covid_fedopt_alpha0.1_ae597039-176a-47ed-96e0-a9adac876c30",
+    "TRAIN_SPLIT_ROOT": "/tmp/covid_splits/covid_fedopt_alpha0.1_96c87f9c-d20f-4464-9756-2cee8d9b148e",
     "alpha": 0.1,
     "server": {
         "heart_beat_timeout": 600
@@ -19,16 +19,16 @@
                 "alpha": "{alpha}"
             }
         },
-	{
-	"id": "model",
-        "path": "pt.networks.cifar10_nets.ModerateCNN",
-         "args": {}
-	},
+        {
+            "id": "model",
+            "path": "pt.networks.covid_nets.SimpleCNN",
+            "args": {}
+        },
         {
             "id": "persistor",
             "name": "PTFileModelPersistor",
             "args": {
-                "model":"model"
+                "model": "model"
             }
         },
         {

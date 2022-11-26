@@ -1,6 +1,6 @@
 {
     "format_version": 2,
-    "TRAIN_SPLIT_ROOT": "/tmp/covid_splits/covid_fedopt_alpha0.1_ae597039-176a-47ed-96e0-a9adac876c30",
+    "TRAIN_SPLIT_ROOT": "/tmp/covid_splits/covid_fedopt_alpha0.1_96c87f9c-d20f-4464-9756-2cee8d9b148e",
     "executors": [
         {
             "tasks": [
