@@ -1,6 +1,6 @@
 {
     "format_version": 2,
-    "TRAIN_SPLIT_ROOT": "/tmp/covid_splits/covid_fedopt_alpha0.1_06265094-9230-45f5-885a-c8ae7a9a3cf0",
+    "TRAIN_SPLIT_ROOT": "/tmp/covid_splits/covid_fedavg_alpha1.0_ba4822a8-82b3-4da5-98e2-0e20059868a3",
     "executors": [
         {
             "tasks": [
@@ -26,7 +26,8 @@
             "args": {
                 "train_idx_root": "{TRAIN_SPLIT_ROOT}",
                 "aggregation_epochs": 4,
-                "lr": 0.005
+                "lr": 0.005,
+		 "fedproxloss_mu": 1e-5
             }
         }
     ]

@@ -2,8 +2,8 @@
     "format_version": 2,
     "min_clients": 8,
     "num_rounds": 20,
-    "TRAIN_SPLIT_ROOT": "/tmp/covid_splits/covid_fedopt_alpha0.1_06265094-9230-45f5-885a-c8ae7a9a3cf0",
-    "alpha": 0.1,
+    "TRAIN_SPLIT_ROOT": "/tmp/covid_splits/covid_fedavg_alpha1.0_ba4822a8-82b3-4da5-98e2-0e20059868a3",
+    "alpha": 1.0,
     "server": {
         "heart_beat_timeout": 600
     },
@@ -20,38 +20,19 @@
             }
         },
         {
-            "id": "model",
-            "path": "pt.networks.covid_nets.SimpleCNN",
-            "args": {}
-        },
-        {
             "id": "persistor",
             "name": "PTFileModelPersistor",
             "args": {
-                "model": "model"
+                "model": {
+                    "path": "pt.networks.covid_nets.SimpleCNN",
+                    "args": {}
+                }
             }
         },
         {
             "id": "shareable_generator",
-            "name": "PTFedOptModelShareableGenerator",
-            "args": {
-                "device": "cpu",
-                "source_model": "model",
-                "optimizer_args": {
-                    "path": "torch.optim.SGD",
-                    "args": {
-                        "lr": 1.0,
-                        "momentum": 0.6
-                    }
-                },
-                "lr_scheduler_args": {
-                    "path": "torch.optim.lr_scheduler.CosineAnnealingLR",
-                    "args": {
-                        "T_max": "{num_rounds}",
-                        "eta_min": 0.9
-                    }
-                }
-            }
+            "name": "FullModelShareableGenerator",
+            "args": {}
         },
         {
             "id": "aggregator",
