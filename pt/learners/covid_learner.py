@@ -185,7 +185,7 @@ class COVIDLearner(Learner):
 
         if self.valid_dataset is None or self.valid_loader is None:
             self.valid_dataset = COVID_Dataset(
-                root=COVID_ROOT,
+                root=COVID_ROOT, is_train = False,
                 transform=self.transform_valid,
             )
             self.valid_loader = torch.utils.data.DataLoader(
