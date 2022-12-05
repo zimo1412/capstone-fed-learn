@@ -76,6 +76,7 @@ nvflare simulator job_configs/covid_central --workspace ${RESULT_ROOT}/central -
 Note, here `alpha=0.0` means that no heterogeneous data splits are being generated.
 
 You can visualize the training progress by running `tensorboard --logdir=${RESULT_ROOT}`
+
 ![Central training curve](./covid-sim/figs/central_training.png)
 
 ### 3.3 FedAvg on different data splits
