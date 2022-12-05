@@ -2,7 +2,7 @@
 
 This example includes instructions on running [FedAvg](https://arxiv.org/abs/1602.05629) algorithms using NVFlare's FL simulator.
 
-All the following command should be executed under `covid-sim` subfolder.
+All the following command should be executed under `covid-sim` subfolder unless otherwise stated.
 
 ## 1. Set up a virtual environment
 ```
