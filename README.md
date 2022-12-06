@@ -2,7 +2,7 @@
 
 This example includes instructions on running [FedAvg](https://arxiv.org/abs/1602.05629) algorithms using NVFlare's FL simulator.
 
-All the following command should be executed under `covid-sim` subfolder.
+All the following command should be executed under `covid-sim` subfolder unless otherwise stated.
 
 ## 1. Set up a virtual environment
 ```
@@ -34,10 +34,17 @@ export COVID_ROOT=${PWD}/../data
 
 ### 2. Download the COVID dataset 
 
-If you are using EC2, download the dataset from S3:
+If you are using Amazon Web Services (AWS) EC2, download the dataset from S3.
 
+Go to IAM on AWS, and create 2 keys with reference foliowing [these steps](https://k21academy.com/amazon-web-services/create-access-and-secret-keys-in-aws/). Keep the keys in a secured file.
+(./covid-sim/figs/iam_access.png)
+
+**Please run the command under the root directory of this repo.**
 ```
-# Run command under the root directory of this repo.
+aws configure
+```
+When prompted, enter the 2 keys generated in the previous step. Leave the "Default region name" and "Default output format" empty.
+```
 aws s3 sync s3://capstone-fed-learn/data/lung_classification/ data/
 ```
 
@@ -52,7 +59,7 @@ export RESULT_ROOT=/tmp/nvflare/sim_covid
 
 ### 3.1 Varying data heterogeneity of data splits
 
-We use an implementation to generated heterogeneous data splits from CIFAR-10 based a Dirichlet sampling strategy 
+We use an implementation to generated heterogeneous data splits based on a Dirichlet sampling strategy 
 from FedMA (https://github.com/IBM/FedMA), where `alpha` controls the amount of heterogeneity, 
 see [Wang et al.](https://arxiv.org/abs/2002.06440).
 
@@ -69,6 +76,7 @@ nvflare simulator job_configs/covid_central --workspace ${RESULT_ROOT}/central -
 Note, here `alpha=0.0` means that no heterogeneous data splits are being generated.
 
 You can visualize the training progress by running `tensorboard --logdir=${RESULT_ROOT}`
+
 ![Central training curve](./covid-sim/figs/central_training.png)
 
 ### 3.3 FedAvg on different data splits
@@ -93,7 +101,7 @@ nvflare simulator job_configs/covid_fedavg --workspace ${RESULT_ROOT}/fedavg_alp
 
 Let's summarize the result of the experiments run above. First, we will compare the final validation scores of 
 the global models for different settings. In this example, all clients compute their validation scores using the
-same CIFAR-10 test set. The plotting script used for the below graphs is in 
+same COVID-19 test set. The plotting script used for the below graphs is in 
 [./figs/plot_tensorboard_events.py](./covid-sim/figs/plot_tensorboard_events.py) 
 (please install [./virtualenv/plot-requirements.txt](./covid-sim/virtualenv/plot-requirements.txt)).
 
@@ -121,3 +129,19 @@ This can be observed in the resulting performance of the FedAvg algorithms.
 | covid_fedavg |	0.1 |	0.74150 |
 
 ![Impact of client data heterogeneity](./covid-sim/figs/fedavg_alpha.png)
+
+
+### 4.3 FedAvg vs. FedProx vs. FedOpt 
+Finally, we compare an alpha setting of 0.1, causing a high client data heterogeneity and its impact on more advanced FL algorithms, namely FedProx and FedOpt. FedOpt achieve better performance compared to FedAvg and FedProx with the same alpha setting. However, FedOpt show markedly better convergence rates. FedOpt utilizes SGD with momentum to update the global model on the server. 
+| Config |	Alpha |	Val score |
+| ----------- | ----------- |  ----------- |
+| covid_fedavg |	0.1 |	0.71650 |
+| covid_fedprox |	0.1 |	0.74325 |
+| covid_fedopt |	0.1 |	0.79500 |
+
+![Different_setting_comparision](./covid-sim/figs/model_comparision.png)
+
+### Credits
+
+https://github.com/NVIDIA/NVFlare/tree/dev/examples/cifar10
+https://k21academy.com/amazon-web-services/create-access-and-secret-keys-in-aws/

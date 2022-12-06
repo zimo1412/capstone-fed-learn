@@ -3,6 +3,7 @@ import os
 
 import numpy as np
 import torchvision.datasets as datasets
+from pt.utils.covid_dataset import COVID_Dataset
 
 from nvflare.apis.event_type import EventType
 from nvflare.apis.fl_component import FLComponent
@@ -62,11 +63,11 @@ class COVIDDataSplitter(FLComponent):
             np.save(site_file_name, np.array(site_idx[site]))
 
     def load_COVID_data(self):
-        # download data
-        train_dataset = datasets.ImageFolder(root = COVID_ROOT)
+        # load training data
+        train_dataset = COVID_Dataset(root = COVID_ROOT)
 
         # only training label is needed for doing split
-        train_label = np.array([x[1] for x in train_dataset.imgs])
+        train_label = np.array([x[1] for x in train_dataset.data])
         return train_label
 
     def _partition_data(self):
