@@ -97,6 +97,21 @@ nvflare simulator job_configs/covid_fedavg --workspace ${RESULT_ROOT}/fedavg_alp
 nvflare simulator job_configs/covid_fedavg --workspace ${RESULT_ROOT}/fedavg_alpha0.1 --threads 8 --n_clients 8
 ```
 
+### 3.4 Advanced FL algorithms (FedProx and FedOpt)
+
+Next, let's try some different FL algorithms on a more heterogeneous split:
+
+FedProx adds a regularizer to the loss used in CovidLearner (fedproxloss_mu)`:
+```
+./set_alpha.sh covid_fedprox 0.1
+nvflare simulator job_configs/covid_fedprox --workspace ${RESULT_ROOT}/fedprox_alpha0.1 --threads 8 --n_clients 8
+```
+FedOpt uses a new ShareableGenerator to update the global model on the server using a PyTorch optimizer. Here SGD with momentum and cosine learning rate decay:
+```
+./set_alpha.sh covid_fedopt 0.1
+nvflare simulator job_configs/covid_fedopt --workspace ${RESULT_ROOT}/fedopt_alpha0.1 --threads 8 --n_clients 8
+```
+
 ## 4. Results
 
 Let's summarize the result of the experiments run above. First, we will compare the final validation scores of 
