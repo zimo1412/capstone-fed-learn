@@ -101,7 +101,7 @@ nvflare simulator job_configs/covid_fedavg --workspace ${RESULT_ROOT}/fedavg_alp
 
 Next, let's try some different FL algorithms on a more heterogeneous split:
 
-FedProx adds a regularizer to the loss used in CovidLearner (fedproxloss_mu)`:
+FedProx adds a regularizer to the loss used in COVIDLearner (fedproxloss_mu)`:
 ```
 ./set_alpha.sh covid_fedprox 0.1
 nvflare simulator job_configs/covid_fedprox --workspace ${RESULT_ROOT}/fedprox_alpha0.1 --threads 8 --n_clients 8
