@@ -130,6 +130,17 @@ This can be observed in the resulting performance of the FedAvg algorithms.
 
 ![Impact of client data heterogeneity](./covid-sim/figs/fedavg_alpha.png)
 
+
+### 4.3 FedAvg vs. FedProx vs. FedOpt 
+Finally, we compare an alpha setting of 0.1, causing a high client data heterogeneity and its impact on more advanced FL algorithms, namely FedProx and FedOpt. FedOpt achieve better performance compared to FedAvg and FedProx with the same alpha setting. However, FedOpt show markedly better convergence rates. FedOpt utilizes SGD with momentum to update the global model on the server. 
+| Config |	Alpha |	Val score |
+| ----------- | ----------- |  ----------- |
+| covid_fedavg |	0.1 |	0.71650 |
+| covid_fedprox |	0.1 |	0.74325 |
+| covid_fedopt |	0.1 |	0.79500 |
+
+![Different_setting_comparision](./covid-sim/figs/model_comparision.png)
+
 ### Credits
 
 https://github.com/NVIDIA/NVFlare/tree/dev/examples/cifar10
